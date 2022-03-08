@@ -7,4 +7,4 @@ services:
     volumes:
       - ../:/work:cached
       - ~/.ssh:/root/.ssh
-      - /work/node_modules
+      - /work/dx2021_webapp/node_modules
