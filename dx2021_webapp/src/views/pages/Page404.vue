@@ -2,21 +2,21 @@
   <div class="bg-light min-vh-100 d-flex flex-row align-items-center">
     <CContainer>
       <CRow class="justify-content-center">
-        <CCol :md="6">
+        <CCol :md="5">
           <div class="clearfix">
             <h1 class="float-start display-3 me-4">404</h1>
-            <h4 class="pt-3">Oops! You're lost.</h4>
+            <h4 class="pt-3">Not Found</h4>
             <p class="text-medium-emphasis float-start">
-              The page you are looking for was not found.
+              ページが見つかりませんでした
             </p>
           </div>
-          <CInputGroup class="input-prepend">
-            <CInputGroupText>
-              <CIcon icon="cil-magnifying-glass" />
-            </CInputGroupText>
-            <CFormInput type="text" placeholder="What are you looking for?" />
-            <CButton color="info">Search</CButton>
-          </CInputGroup>
+        </CCol>
+      </CRow>
+      <CRow class="justify-content-center">
+        <CCol :md="5">
+          <button class="btn btn-primary" type="button" @click="toHome">
+            ホームに戻る
+          </button>
         </CCol>
       </CRow>
     </CContainer>
@@ -26,5 +26,10 @@
 <script>
 export default {
   name: 'Page404',
+  methods: {
+    toHome() {
+      this.$router.push('/')
+    },
+  },
 }
 </script>

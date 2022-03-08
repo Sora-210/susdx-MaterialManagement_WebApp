@@ -3,18 +3,21 @@
     <CContainer>
       <CRow class="justify-content-center">
         <CCol :md="8">
+          <h1>資材管理システム</h1>
           <CCardGroup>
-            <CCard class="p-4">
+            <CCard class="p-4 login-card">
               <CCardBody>
                 <CForm>
                   <h1>Login</h1>
-                  <p class="text-medium-emphasis">Sign In to your account</p>
+                  <p class="text-medium-emphasis">
+                    管理アカウントでログインしてください
+                  </p>
                   <CInputGroup class="mb-3">
                     <CInputGroupText>
                       <CIcon icon="cil-user" />
                     </CInputGroupText>
                     <CFormInput
-                      placeholder="Username"
+                      placeholder="AccountID"
                       autocomplete="username"
                     />
                   </CInputGroup>
@@ -32,28 +35,8 @@
                     <CCol :xs="6">
                       <CButton color="primary" class="px-4"> Login </CButton>
                     </CCol>
-                    <CCol :xs="6" class="text-right">
-                      <CButton color="link" class="px-0">
-                        Forgot password?
-                      </CButton>
-                    </CCol>
                   </CRow>
                 </CForm>
-              </CCardBody>
-            </CCard>
-            <CCard class="text-white bg-primary py-5" style="width: 44%">
-              <CCardBody class="text-center">
-                <div>
-                  <h2>Sign up</h2>
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-                    sed do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua.
-                  </p>
-                  <CButton color="light" variant="outline" class="mt-3">
-                    Register Now!
-                  </CButton>
-                </div>
               </CCardBody>
             </CCard>
           </CCardGroup>
@@ -68,3 +51,9 @@ export default {
   name: 'Login',
 }
 </script>
+
+<style scoped>
+.login-card {
+  border-left: solid 25px #321fdb;
+}
+</style>
