@@ -3,7 +3,11 @@
     "dockerComposeFile": "docker-compose.yml",
     "service": "dev",
     "workspaceFolder": "/work",
-    "settings": {},
+    "settings": {
+      "eslint.workingDirectories": [
+        { "mode": "auto" }
+      ],
+    },
     "extensions": [
 		"dbaeumer.vscode-eslint",
 		"octref.vetur",
