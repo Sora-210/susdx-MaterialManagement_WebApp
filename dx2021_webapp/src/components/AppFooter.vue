@@ -1,10 +1,9 @@
 <template>
   <CFooter>
     <div>
-      <a href="https://coreui.io" target="_blank">CoreUI</a>
-      <span class="ms-1"
-        >&copy; {{ new Date().getFullYear() }} creativeLabs.</span
-      >
+      <span class="ms-1">
+        AI-IoT DX Contest 2021 &copy; Suwa University of Science
+      </span>
     </div>
     <div class="ms-auto">
       <span class="me-1" target="_blank">Powered by</span>
