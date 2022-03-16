@@ -1,0 +1,29 @@
+<template>
+  <CCard>
+    <CCardHeader><CIcon icon="cil-drop" /> {{ cameraName }} </CCardHeader>
+    <CCardBody>
+      <CRow>
+        <CImage fluid :src="imageUrl" />
+      </CRow>
+    </CCardBody>
+  </CCard>
+</template>
+
+<script>
+export default {
+  name: 'CameraCard',
+  props: {
+    cameraName: {
+      type: String,
+      default: '<Example>',
+    },
+    imageUrl: {
+      type: String,
+      default: 'http://118.27.110.225/cam1/example',
+    },
+  },
+  setup(props) {
+    console.log(props.imageUrl)
+  },
+}
+</script>
