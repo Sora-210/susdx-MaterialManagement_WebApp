@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-for="Lists in list" :key="Lists.index">
+    <div v-for="Lists in datas" :key="Lists.index">
       <h3>{{ Lists[0] }}</h3>
       <CRow class="mb-5" :xs="{ cols: 1 }" :md="{ cols: 3 }" :xl="{ cols: 5 }">
         <CCol v-for="status in Lists[1]" :key="status.name" class="mb-2">
@@ -19,64 +19,23 @@ export default {
   components: {
     StatusCard,
   },
-  setup() {
-    const list = [
-      [
-        'Camera 1',
-        [
-          {
-            name: 'Camera 1 - No.1',
-            status: 'many',
-          },
-          {
-            name: 'Camera 1 - No.2',
-            status: 'few',
-          },
-          {
-            name: 'Camera 1 - No.3',
-            status: 'cover',
-          },
-        ],
-      ],
-      [
-        'Camera 2',
-        [
-          {
-            name: 'Camera 2 - No.1',
-            status: 'none',
-          },
-          {
-            name: 'Camera 2 - No.2',
-            status: 'many',
-          },
-        ],
-      ],
-      [
-        'Camera 3',
-        [
-          {
-            name: 'Camera 3 - No.1',
-            status: 'few',
-          },
-        ],
-      ],
-      [
-        'Camera 4',
-        [
-          {
-            name: 'Camera 4 - No.1',
-            status: 'none',
-          },
-          {
-            name: 'Camera 4 - No.2',
-            status: 'many',
-          },
-        ],
-      ],
-    ]
-    return {
-      list,
-    }
+  props: {
+    datas: {
+      type: Array,
+      default() {
+        return [
+          [
+            'Example',
+            [
+              {
+                name: 'example - No.1',
+                status: 'many',
+              },
+            ],
+          ],
+        ]
+      },
+    },
   },
 }
 </script>

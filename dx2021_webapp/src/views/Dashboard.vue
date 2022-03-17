@@ -65,7 +65,7 @@
         </CCard>
       </CCol>
     </CRow>
-    <StatusWidgets />
+    <StatusWidgets :datas="list" />
   </div>
 </template>
 
@@ -79,11 +79,12 @@ export default {
     StatusWidgets,
   },
   setup() {
-    const allSection = ref(8)
-    const manySection = ref(3)
-    const fewSection = ref(2)
-    const noneSection = ref(2)
-    const coverSection = ref(1)
+    const allSection = ref(0)
+    const manySection = ref(0)
+    const fewSection = ref(0)
+    const noneSection = ref(0)
+    const coverSection = ref(0)
+    const list = ref([])
 
     const manyPercent = computed(
       () => Math.floor((manySection.value / allSection.value) * 1000) / 10,
@@ -108,7 +109,29 @@ export default {
       fewPercent,
       nonePercent,
       coverPercent,
+      list,
     }
+  },
+  async mounted() {
+    const res = await fetch('http://api.sus-dx.sora210.net/cam1/inference', {
+      mode: 'cors',
+    })
+    let statusJson = (await res.json()).data
+    statusJson.forEach((value) => {
+      this.list.push(value)
+      value[1].forEach((value2) => {
+        this.allSection++
+        if (value2.status === 'many') {
+          this.manySection++
+        } else if (value2.status === 'few') {
+          this.fewSection++
+        } else if (value2.status === 'none') {
+          this.noneSection++
+        } else if (value2.status === 'cover') {
+          this.coverSection++
+        }
+      })
+    })
   },
 }
 </script>
