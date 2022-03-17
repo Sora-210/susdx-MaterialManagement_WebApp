@@ -1,15 +1,19 @@
 <template>
   <div>
     <CForm class="mb-5">
-      <CRow :xs="{ cols: 1 }" :md="{ cols: 2 }">
+      <CRow :xs="{ cols: 1 }" :md="{ cols: 2 }" :xl="{ cols: 3 }">
         <CCol>
           <div class="mb-3">
-            <CFormLabel for="cameraNumber">Camera Number</CFormLabel>
+            <CFormLabel for="cameraNumber">カメラ名</CFormLabel>
             <CFormSelect
               aria-label="CameraNumberSelect"
               :options="cameraNumberSelectOption"
+              required
             >
             </CFormSelect>
+            <CFormFeedback invalid>
+              カメラ番号を選択してください
+            </CFormFeedback>
           </div>
         </CCol>
         <CCol>
@@ -28,19 +32,20 @@
         </CCol>
       </CRow>
       <div class="mb-3">
-        <CButton color="primary" type="submit">検索</CButton>
+        <CButton color="primary" type="submit" @click="search">検索</CButton>
       </div>
     </CForm>
     <!-- 画像表示 -->
     <CRow :xs="{ cols: 1 }" :md="{ cols: 2 }" :xl="{ cols: 3 }">
-      <CCol v-for="url in urlList" :key="url" class="mb-3">
-        <camera-card :imageUrl="url" :cameraName="url" />
+      <CCol v-for="imageData in imageList" :key="imageData.index" class="mb-3">
+        <camera-card :imageUrl="imageData.url" :cameraName="imageData.name" />
       </CCol>
     </CRow>
   </div>
 </template>
 
 <script>
+import { ref, computed } from 'vue'
 import CameraCard from '@/components/CameraCard.vue'
 
 export default {
@@ -50,33 +55,48 @@ export default {
   },
   setup() {
     const cameraNumberSelectOption = [
-      'カメラ番号を選択してください',
       {
         label: 'Camera 1',
         value: 'cam1',
       },
     ]
-    let date = new Date()
 
-    const urlList = [
-      'http://118.27.110.225/cam1/2022-03-10-00',
-      'http://118.27.110.225/cam1/2022-03-10-01',
-      'http://118.27.110.225/cam1/2022-03-10-02',
-      'http://118.27.110.225/cam1/2022-03-10-03',
-      'http://118.27.110.225/cam1/2022-03-10-04',
-      'http://118.27.110.225/cam1/2022-03-10-05',
-      'http://118.27.110.225/cam1/2022-03-10-06',
-      'http://118.27.110.225/cam1/2022-03-10-07',
-      'http://118.27.110.225/cam1/2022-03-10-08',
-      'http://118.27.110.225/cam1/2022-03-10-09',
-      'http://118.27.110.225/cam1/2022-03-10-10',
-      'http://118.27.110.225/cam1/2022-03-10-11',
-    ]
+    const date = ref(new Date())
+    const dateFormat = computed(() => {
+      let formatString = date.value.getFullYear() + '/'
+      if (date.value.getMonth() + 1 < 10) {
+        formatString +=
+          '0' + (date.value.getMonth() + 1) + '/' + date.value.getDate()
+      } else {
+        formatString += date.value.getMonth() + 1 + '/' + date.value.getDate()
+      }
+      return formatString
+    })
+
+    let imageList = ref([])
+    const search = async function () {
+      imageList.value.length = 0
+      const res = await fetch(
+        'http://118.27.110.225/cam1/list/' + dateFormat.value,
+        {
+          mode: 'cors',
+        },
+      )
+      let list = (await res.json()).list
+      list.forEach((fileName) => {
+        imageList.value.push({
+          name: fileName,
+          url: 'http://118.27.110.225/cam1/' + fileName.split('.')[0],
+        })
+      })
+    }
 
     return {
       cameraNumberSelectOption,
       date,
-      urlList,
+      imageList,
+      dateFormat,
+      search,
     }
   },
 }
