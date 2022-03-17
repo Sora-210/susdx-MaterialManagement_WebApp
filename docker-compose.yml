@@ -1,0 +1,17 @@
+version: "3"
+services:
+  app:
+    build: .
+    container_name: dx2021_app
+    ports:
+      - 888:80
+    networks:
+      dxNetwork-1:
+        ipv4_address: 192.1.2.3
+networks:
+  dxNetwork-1:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.1.2.0/24
