@@ -65,7 +65,6 @@
         </CCard>
       </CCol>
     </CRow>
-    <CButton @click="test">Test</CButton>
     <StatusWidgets />
   </div>
 </template>
