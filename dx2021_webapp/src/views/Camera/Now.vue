@@ -24,7 +24,7 @@ export default {
     const metaDatas = [
       {
         cameraName: 'Camera1',
-        imageUrl: 'http://118.27.110.225/cam1',
+        imageUrl: 'http://api.sus-dx.sora210.net/cam1',
       },
     ]
 

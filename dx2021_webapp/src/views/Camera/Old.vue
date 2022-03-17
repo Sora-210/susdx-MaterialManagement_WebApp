@@ -77,7 +77,7 @@ export default {
     const search = async function () {
       imageList.value.length = 0
       const res = await fetch(
-        'http://118.27.110.225/cam1/list/' + dateFormat.value,
+        'http://api.sus-dx.sora210.net/cam1/list/' + dateFormat.value,
         {
           mode: 'cors',
         },
@@ -86,7 +86,7 @@ export default {
       list.forEach((fileName) => {
         imageList.value.push({
           name: fileName,
-          url: 'http://118.27.110.225/cam1/' + fileName.split('.')[0],
+          url: 'http://api.sus-dx.sora210.net/cam1/' + fileName.split('.')[0],
         })
       })
     }
