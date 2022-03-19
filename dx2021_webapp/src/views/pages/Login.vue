@@ -8,36 +8,43 @@
             <CCardGroup>
               <CCard class="p-4 login-card">
                 <CCardBody>
-                  <CForm>
-                    <h1>Login</h1>
-                    <p class="text-medium-emphasis">
-                      管理アカウントでログインしてください
-                    </p>
-                    <CInputGroup class="mb-3">
-                      <CInputGroupText>
-                        <CIcon icon="cil-user" />
-                      </CInputGroupText>
-                      <CFormInput
-                        placeholder="AccountID"
-                        autocomplete="username"
-                      />
-                    </CInputGroup>
-                    <CInputGroup class="mb-4">
-                      <CInputGroupText>
-                        <CIcon icon="cil-lock-locked" />
-                      </CInputGroupText>
-                      <CFormInput
-                        type="password"
-                        placeholder="Password"
-                        autocomplete="current-password"
-                      />
-                    </CInputGroup>
-                    <CRow>
-                      <CCol :xs="6">
-                        <CButton color="primary" class="px-4"> Login </CButton>
-                      </CCol>
-                    </CRow>
-                  </CForm>
+                  <h1>Login</h1>
+                  <p class="text-medium-emphasis">
+                    管理アカウントでログインしてください
+                  </p>
+                  <CInputGroup class="mb-3">
+                    <CInputGroupText>
+                      <CIcon icon="cil-user" />
+                    </CInputGroupText>
+                    <CFormInput
+                      placeholder="AccountID"
+                      autocomplete="username"
+                      v-model="accountId"
+                    />
+                  </CInputGroup>
+                  <CInputGroup class="mb-4">
+                    <CInputGroupText>
+                      <CIcon icon="cil-lock-locked" />
+                    </CInputGroupText>
+                    <CFormInput
+                      type="password"
+                      placeholder="Password"
+                      autocomplete="current-password"
+                      v-model="password"
+                    />
+                  </CInputGroup>
+                  <CRow>
+                    <CCol :xs="6">
+                      <CButton
+                        role="button"
+                        color="primary"
+                        class="px-4"
+                        @click="login"
+                      >
+                        Login
+                      </CButton>
+                    </CCol>
+                  </CRow>
                 </CCardBody>
               </CCard>
             </CCardGroup>
@@ -52,10 +59,41 @@
 <script>
 import AppFooter from '@/components/AppFooter.vue'
 
+import { ref } from 'vue'
+
 export default {
   name: 'Login',
   components: {
     AppFooter,
+  },
+  setup() {
+    const accountId = ref('')
+    const password = ref('')
+
+    return {
+      accountId,
+      password,
+    }
+  },
+  methods: {
+    login: function () {
+      this.$store.commit('setJwt', 'testJwt')
+      console.log(this.$route.query)
+
+      if (this.accountId === 'sus' && this.password === 'suwarika') {
+        if (this.$route.query.path) {
+          console.log('path ok')
+          this.$router.push({ path: this.$route.query.path })
+        } else {
+          console.log('path ng')
+          this.$router.push({ path: '/' })
+        }
+      } else {
+        console.log('accountId:' + this.accountId)
+        console.log('password:' + this.password)
+        alert('AccountId, Passwordのいずれかが異なります')
+      }
+    },
   },
 }
 </script>

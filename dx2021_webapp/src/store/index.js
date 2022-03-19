@@ -4,8 +4,17 @@ export default createStore({
   state: {
     sidebarVisible: '',
     sidebarUnfoldable: false,
+    jwt: '',
+  },
+  getters: {
+    checkJwt(state) {
+      return state.jwt !== ''
+    },
   },
   mutations: {
+    setJwt(state, jwt) {
+      state.jwt = jwt
+    },
     toggleSidebar(state) {
       state.sidebarVisible = !state.sidebarVisible
     },
@@ -16,6 +25,5 @@ export default createStore({
       state.sidebarVisible = payload.value
     },
   },
-  actions: {},
   modules: {},
 })

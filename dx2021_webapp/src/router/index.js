@@ -2,6 +2,8 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 
 import DefaultLayout from '@/layouts/DefaultLayout'
 
+import store from '@/store/index'
+
 const routes = [
   {
     path: '/login',
@@ -22,15 +24,12 @@ const routes = [
     path: '/',
     name: 'Home',
     component: DefaultLayout,
+    meta: { requiredAuth: true },
     children: [
       {
         path: '/',
         name: 'Dashboard',
-        // route level code-splitting
-        // this generates a separate chunk (about.[hash].js) for this route
-        // which is lazy-loaded when the route is visited.
-        component: () =>
-          import(/* webpackChunkName: "dashboard" */ '@/views/Dashboard.vue'),
+        component: () => import('@/views/Dashboard.vue'),
       },
       {
         path: '/Image/now',
@@ -42,6 +41,16 @@ const routes = [
         name: 'ImageOld',
         component: () => import('@/views/Camera/Old.vue'),
       },
+      {
+        path: '/Setting/device',
+        name: 'deviceSetting',
+        component: () => import('@/views/Setting/Device.vue'),
+      },
+      {
+        path: '/Setting/section',
+        name: 'sectionSetting',
+        component: () => import('@/views/Setting/Section.vue'),
+      },
     ],
   },
 ]
@@ -50,9 +59,22 @@ const router = createRouter({
   history: createWebHashHistory(process.env.BASE_URL),
   routes,
   scrollBehavior() {
-    // always scroll to top
     return { top: 0 }
   },
+})
+
+router.beforeEach((to, from, next) => {
+  if (
+    to.matched.some((record) => {
+      return record.meta.requiredAuth
+    }) &&
+    !store.getters.checkJwt
+  ) {
+    console.log('logincheck false')
+    next({ path: '/login', query: { path: to.fullPath } })
+  } else {
+    next()
+  }
 })
 
 export default router
