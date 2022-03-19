@@ -38,7 +38,13 @@ export default [
   {
     component: 'CNavItem',
     name: 'デバイス',
-    to: '/404',
+    to: '/Setting/device',
+    icon: 'cil-puzzle',
+  },
+  {
+    component: 'CNavItem',
+    name: '推論区画',
+    to: '/Setting/section',
     icon: 'cil-puzzle',
   },
 ]
