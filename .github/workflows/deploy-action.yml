@@ -10,7 +10,7 @@ jobs:
     - name: CheckOut
       uses: actions/checkout@v2
     - name: Slack Notification on Deploy Start
-      id: slack
+      id: slack-start
       uses: slackapi/slack-github-action@v1.16.0
       with:
         payload: |
@@ -66,7 +66,7 @@ jobs:
       run: |
         ssh server "cd dx2021-MaterialManagementApp && git pull origin main && docker-compose -f docker-compose.yml build && docker-compose -f docker-compose.yml down && docker-compose -f docker-compose.yml up -d"
     - name: Slack Notification on Deploy End
-      id: slack
+      id: slack-end
       uses: slackapi/slack-github-action@v1.16.0
       with:
         payload: |
