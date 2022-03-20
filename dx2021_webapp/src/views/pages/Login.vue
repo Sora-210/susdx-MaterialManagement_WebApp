@@ -58,8 +58,9 @@
 
 <script>
 import AppFooter from '@/components/AppFooter.vue'
-
 import { ref } from 'vue'
+
+import api from '@/api'
 
 export default {
   name: 'Login',
@@ -77,21 +78,28 @@ export default {
   },
   methods: {
     login: function () {
-      this.$store.commit('setJwt', 'testJwt')
-      console.log(this.$route.query)
-
-      if (this.accountId === 'sus' && this.password === 'suwarika') {
-        if (this.$route.query.path) {
-          console.log('path ok')
-          this.$router.push({ path: this.$route.query.path })
-        } else {
-          console.log('path ng')
-          this.$router.push({ path: '/' })
+      if (this.accountId !== '' && this.password !== '') {
+        const body = {
+          accountId: this.accountId,
+          password: this.password,
         }
+        api
+          .post('http://api.sus-dx.sora210.net/login', body)
+          .then((res) => {
+            this.$store.commit('setJwt', res.data.token)
+            if (this.$route.query.path) {
+              console.log('path ok')
+              this.$router.push({ path: this.$route.query.path })
+            } else {
+              console.log('path ng')
+              this.$router.push({ path: '/' })
+            }
+          })
+          .catch(() => {
+            alert('AccountId, Passwordのいずれかが異なります')
+          })
       } else {
-        console.log('accountId:' + this.accountId)
-        console.log('password:' + this.password)
-        alert('AccountId, Passwordのいずれかが異なります')
+        alert('accountId, passwordを入力してください')
       }
     },
   },
