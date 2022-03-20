@@ -10,6 +10,9 @@ export default createStore({
     checkJwt(state) {
       return state.jwt !== ''
     },
+    jwt(state) {
+      return state.jwt
+    },
   },
   mutations: {
     setJwt(state, jwt) {

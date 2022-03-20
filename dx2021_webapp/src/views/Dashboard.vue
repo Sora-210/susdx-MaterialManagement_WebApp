@@ -73,6 +73,9 @@
 import { ref, computed } from 'vue'
 import StatusWidgets from '@/components/StatusWidgets.vue'
 
+import store from '@/store/index'
+import api from '@/api'
+
 export default {
   name: 'Dashboard',
   components: {
@@ -113,25 +116,31 @@ export default {
     }
   },
   async mounted() {
-    const res = await fetch('http://api.sus-dx.sora210.net/cam1/inference', {
-      mode: 'cors',
-    })
-    let statusJson = (await res.json()).data
-    statusJson.forEach((value) => {
-      this.list.push(value)
-      value[1].forEach((value2) => {
-        this.allSection++
-        if (value2.status === 'many') {
-          this.manySection++
-        } else if (value2.status === 'few') {
-          this.fewSection++
-        } else if (value2.status === 'none') {
-          this.noneSection++
-        } else if (value2.status === 'cover') {
-          this.coverSection++
-        }
+    const option = {
+      headers: {
+        authorization: `Bearer ${store.getters.jwt}`,
+      },
+    }
+    api
+      .get('http://api.sus-dx.sora210.net/cam1/inference', option)
+      .then((res) => {
+        let statusJson = res.data.data
+        statusJson.forEach((value) => {
+          this.list.push(value)
+          value[1].forEach((value2) => {
+            this.allSection++
+            if (value2.status === 'many') {
+              this.manySection++
+            } else if (value2.status === 'few') {
+              this.fewSection++
+            } else if (value2.status === 'none') {
+              this.noneSection++
+            } else if (value2.status === 'cover') {
+              this.coverSection++
+            }
+          })
+        })
       })
-    })
   },
 }
 </script>

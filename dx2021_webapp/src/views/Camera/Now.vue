@@ -15,6 +15,8 @@
 <script>
 import CameraCard from '@/components/CameraCard.vue'
 
+import store from '@/store/index'
+
 export default {
   name: 'CameraNow',
   components: {
@@ -24,7 +26,9 @@ export default {
     const metaDatas = [
       {
         cameraName: 'Camera1',
-        imageUrl: 'http://api.sus-dx.sora210.net/cam1',
+        imageUrl:
+          'http://api.sus-dx.sora210.net/cam1?authorization=' +
+          store.getters.jwt,
       },
     ]
 

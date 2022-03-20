@@ -1,6 +1,6 @@
 <template>
   <div>
-    <CForm class="mb-5">
+    <div class="mb-5">
       <CRow :xs="{ cols: 1 }" :md="{ cols: 2 }" :xl="{ cols: 3 }">
         <CCol>
           <div class="mb-3">
@@ -34,7 +34,7 @@
       <div class="mb-3">
         <CButton color="primary" type="submit" @click="search">検索</CButton>
       </div>
-    </CForm>
+    </div>
     <!-- 画像表示 -->
     <CRow :xs="{ cols: 1 }" :md="{ cols: 2 }" :xl="{ cols: 3 }">
       <CCol v-for="imageData in imageList" :key="imageData.index" class="mb-3">
@@ -47,6 +47,10 @@
 <script>
 import { ref, computed } from 'vue'
 import CameraCard from '@/components/CameraCard.vue'
+
+import store from '@/store/index'
+
+import api from '@/api'
 
 export default {
   name: 'CameraOld',
@@ -76,19 +80,30 @@ export default {
     let imageList = ref([])
     const search = async function () {
       imageList.value.length = 0
-      const res = await fetch(
-        'http://api.sus-dx.sora210.net/cam1/list/' + dateFormat.value,
-        {
-          mode: 'cors',
+      const option = {
+        headers: {
+          authorization: `Bearer ${store.getters.jwt}`,
         },
-      )
-      let list = (await res.json()).list
-      list.forEach((fileName) => {
-        imageList.value.push({
-          name: fileName,
-          url: 'http://api.sus-dx.sora210.net/cam1/' + fileName.split('.')[0],
+      }
+      api
+        .get(
+          `http://api.sus-dx.sora210.net/cam1/list/${dateFormat.value}`,
+          option,
+        )
+        .then((res) => {
+          console.log(res.data)
+          let list = res.data.list
+          list.forEach((fileName) => {
+            imageList.value.push({
+              name: fileName,
+              url:
+                'http://api.sus-dx.sora210.net/cam1/' +
+                fileName.split('.')[0] +
+                '?authorization=' +
+                store.getters.jwt,
+            })
+          })
         })
-      })
     }
 
     return {
