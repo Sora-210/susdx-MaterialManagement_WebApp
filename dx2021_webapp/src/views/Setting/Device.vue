@@ -5,7 +5,7 @@
         <h1>カメラデバイス一覧</h1>
       </CCol>
       <CCol class="align-self-center" style="text-align: end">
-        <CButton color="success" variant="outline">
+        <CButton color="success" variant="outline" @click="addCamera">
           カメラデバイス追加
         </CButton>
       </CCol>
@@ -15,7 +15,7 @@
         <tr class="tb-title">
           <th>デバイス名</th>
           <th>登録日</th>
-          <th>カメラ</th>
+          <th>カメラ名</th>
           <th>ステータス</th>
         </tr>
         <div
@@ -53,39 +53,32 @@
 </template>
 
 <script>
+import { ref } from 'vue'
+import store from '@/store/index'
+import api from '@/api'
+
 export default {
   name: 'CameraSetting',
   setup() {
-    const deviceList = [
-      {
-        deviceName: 'Jetson-1',
-        redisteredDate: '2022-03-09',
-        cameraList: [
-          {
-            cameraName: 'Camera 1',
-            status: true,
-          },
-          {
-            cameraName: 'Camera 2',
-            status: false,
-          },
-        ],
+    let deviceList = ref([])
+    const option = {
+      headers: {
+        authorization: `Bearer ${store.getters.jwt}`,
       },
-      {
-        deviceName: 'Jetson-2',
-        redisteredDate: '2022-03-10',
-        cameraList: [
-          {
-            cameraName: 'Camera 3',
-            status: true,
-          },
-        ],
-      },
-    ]
+    }
+    api.get(`http://api.sus-dx.sora210.net/list/`, option).then((res) => {
+      console.log(res.data)
+      deviceList.value = res.data
+    })
 
     return {
       deviceList,
     }
+  },
+  methods: {
+    addCamera: function () {
+      alert('この機能は未実装です')
+    },
   },
 }
 </script>
