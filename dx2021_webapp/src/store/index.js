@@ -5,6 +5,7 @@ export default createStore({
     sidebarVisible: '',
     sidebarUnfoldable: false,
     jwt: '',
+    accountName: 'DEMO-USER',
   },
   getters: {
     checkJwt(state) {
@@ -13,10 +14,16 @@ export default createStore({
     jwt(state) {
       return state.jwt
     },
+    accountName(state) {
+      return state.accountName
+    },
   },
   mutations: {
     setJwt(state, jwt) {
       state.jwt = jwt
+    },
+    logout(state) {
+      state.jwt = ''
     },
     toggleSidebar(state) {
       state.sidebarVisible = !state.sidebarVisible
