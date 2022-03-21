@@ -30,10 +30,22 @@
             </v-date-picker>
           </div>
         </CCol>
+        <CCol
+          class="align-self-center"
+          style="text-align: end"
+          :md="{ offset: 6 }"
+          :xl="{ offset: 0 }"
+        >
+          <CButton
+            color="primary"
+            type="submit"
+            @click="search"
+            style="width: 50%"
+          >
+            検索
+          </CButton>
+        </CCol>
       </CRow>
-      <div class="mb-3">
-        <CButton color="primary" type="submit" @click="search">検索</CButton>
-      </div>
     </div>
     <!-- 画像表示 -->
     <CRow :xs="{ cols: 1 }" :md="{ cols: 2 }" :xl="{ cols: 3 }">
