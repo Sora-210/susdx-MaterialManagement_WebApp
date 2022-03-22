@@ -5,7 +5,6 @@
       <!-- 画像Canvas -->
       <canvas id="canvasImage" class="canvas"></canvas>
     </div>
-    <StatusWidgets :datas="list" />
   </div>
 </template>
 
@@ -27,17 +26,23 @@
   right: 0;
   bottom: 0;
   left: 0;
-  margin: auto;
   position: absolute;
 }
 </style>
 
 <script>
+import { ref } from 'vue'
 import store from '@/store/index'
 import api from '@/api'
 
 export default {
   name: 'SectionSetting',
+  setup() {
+    const list = ref([])
+    return {
+      list,
+    }
+  },
   async mounted() {
     //区画情報を取得
     const option = {
@@ -49,29 +54,18 @@ export default {
       'https://api.sus-dx.sora210.net/cam1/config/inference',
       option,
     )
-    const resInference = await api.get(
-      'https://api.sus-dx.sora210.net/cam1/inference',
-      option,
-    )
-
-    const color = {
-      many: 'rgb(0, 255, 0)',
-      few: 'rgb(255, 255, 0)',
-      cover: 'rgb(0, 0, 0)',
-      none: 'rgb(255, 0, 0)',
-    }
 
     const object_list = res.data.object_list
     //取得した情報を整形
     function dataShaping(lists) {
       const shapedList = []
-      lists.forEach((list, index) => {
+      lists.forEach((list) => {
         const shaped = {}
         shaped.x = list['left-top'].x
         shaped.y = list['left-top'].y
         shaped.w = list['right-bottom'].x - shaped.x
         shaped.h = list['right-bottom'].y - shaped.y
-        shaped.color = color[resInference.data.data[0][1][index].status]
+        shaped.color = 'rgb(0, 255, 0)'
         shapedList.push(shaped)
       })
 
@@ -115,6 +109,7 @@ export default {
       const width = wrap.clientWidth //wrapブロックの横幅取得
       const scale = width / 1920 //FullHDとの比較倍率
       const height = 1080 * scale //アスペクト比固定での高さ計算
+      wrap.style.height = `${height}px`
 
       //canvasをリサイズ
       canvas_1.width = width
