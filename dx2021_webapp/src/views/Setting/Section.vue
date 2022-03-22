@@ -5,6 +5,7 @@
       <!-- 画像Canvas -->
       <canvas id="canvasImage" class="canvas"></canvas>
     </div>
+    <StatusWidgets :datas="list" />
   </div>
 </template>
 
@@ -48,18 +49,29 @@ export default {
       'http://api.sus-dx.sora210.net/cam1/config/inference',
       option,
     )
-    const object_list = res.data.object_list
+    const resInference = await api.get(
+      'http://api.sus-dx.sora210.net/cam1/inference',
+      option,
+    )
 
+    const color = {
+      many: 'rgb(0, 255, 0)',
+      few: 'rgb(255, 255, 0)',
+      cover: 'rgb(0, 0, 0)',
+      none: 'rgb(255, 0, 0)',
+    }
+
+    const object_list = res.data.object_list
     //取得した情報を整形
-    function dataShaping(list) {
+    function dataShaping(lists) {
       const shapedList = []
-      list.forEach((data) => {
+      lists.forEach((list, index) => {
         const shaped = {}
-        shaped.x = data['left-top'].x
-        shaped.y = data['left-top'].y
-        shaped.w = data['right-bottom'].x - shaped.x
-        shaped.h = data['right-bottom'].y - shaped.y
-        shaped.color = 'rgb(0, 255, 0)'
+        shaped.x = list['left-top'].x
+        shaped.y = list['left-top'].y
+        shaped.w = list['right-bottom'].x - shaped.x
+        shaped.h = list['right-bottom'].y - shaped.y
+        shaped.color = color[resInference.data.data[0][1][index].status]
         shapedList.push(shaped)
       })
 

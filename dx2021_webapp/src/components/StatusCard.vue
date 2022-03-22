@@ -34,7 +34,7 @@ export default {
   setup(props) {
     const DefaultList = {
       many: {
-        color: 'primary',
+        color: 'success',
         status: '多い',
       },
       few: {
