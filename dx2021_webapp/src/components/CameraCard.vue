@@ -19,7 +19,7 @@ export default {
     },
     imageUrl: {
       type: String,
-      default: 'http://api.sus-dx.sora210.net/cam1/example',
+      default: 'https://api.sus-dx.sora210.net/cam1/example',
     },
   },
   setup(props) {

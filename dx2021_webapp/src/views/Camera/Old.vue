@@ -104,7 +104,7 @@ export default {
       }
       api
         .get(
-          `http://api.sus-dx.sora210.net/cam1/list/${dateFormat.value}`,
+          `https://api.sus-dx.sora210.net/cam1/list/${dateFormat.value}`,
           option,
         )
         .then((res) => {
@@ -114,7 +114,7 @@ export default {
             imageList.value.push({
               name: fileName,
               url:
-                'http://api.sus-dx.sora210.net/cam1/' +
+                'https://api.sus-dx.sora210.net/cam1/' +
                 fileName.split('.')[0] +
                 '?authorization=' +
                 store.getters.jwt,

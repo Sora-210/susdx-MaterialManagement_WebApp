@@ -122,7 +122,7 @@ export default {
       },
     }
     api
-      .get('http://api.sus-dx.sora210.net/cam1/inference', option)
+      .get('https://api.sus-dx.sora210.net/cam1/inference', option)
       .then((res) => {
         let statusJson = res.data.data
         statusJson.forEach((value) => {

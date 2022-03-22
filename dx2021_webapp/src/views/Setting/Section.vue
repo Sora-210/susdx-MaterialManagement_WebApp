@@ -46,11 +46,11 @@ export default {
       },
     }
     const res = await api.get(
-      'http://api.sus-dx.sora210.net/cam1/config/inference',
+      'https://api.sus-dx.sora210.net/cam1/config/inference',
       option,
     )
     const resInference = await api.get(
-      'http://api.sus-dx.sora210.net/cam1/inference',
+      'https://api.sus-dx.sora210.net/cam1/inference',
       option,
     )
 
@@ -86,7 +86,7 @@ export default {
 
     //画像を準備(最新画像を使用)
     const base_image = new Image()
-    base_image.src = `http://api.sus-dx.sora210.net/cam1?authorization=${this.$store.getters.jwt}`
+    base_image.src = `https://api.sus-dx.sora210.net/cam1?authorization=${this.$store.getters.jwt}`
     //画像描画canvasを準備
     const canvas_1 = document.getElementById('canvasImage')
     const canvas_1_ctx = canvas_1.getContext('2d')

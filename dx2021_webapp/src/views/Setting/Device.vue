@@ -66,7 +66,7 @@ export default {
         authorization: `Bearer ${store.getters.jwt}`,
       },
     }
-    api.get(`http://api.sus-dx.sora210.net/list/`, option).then((res) => {
+    api.get(`https://api.sus-dx.sora210.net/list/`, option).then((res) => {
       console.log(res.data)
       deviceList.value = res.data
     })

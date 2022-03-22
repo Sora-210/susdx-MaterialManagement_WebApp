@@ -84,7 +84,7 @@ export default {
           password: this.password,
         }
         api
-          .post('http://api.sus-dx.sora210.net/login', body)
+          .post('https://api.sus-dx.sora210.net/login', body)
           .then((res) => {
             this.$store.commit('setJwt', res.data.token)
             if (this.$route.query.path) {
