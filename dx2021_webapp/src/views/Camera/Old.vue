@@ -81,11 +81,16 @@ export default {
     const dateFormat = computed(() => {
       let formatString = date.value.getFullYear() + '/'
       if (date.value.getMonth() + 1 < 10) {
-        formatString +=
-          '0' + (date.value.getMonth() + 1) + '/' + date.value.getDate()
+        formatString += '0' + (date.value.getMonth() + 1) + '/'
       } else {
-        formatString += date.value.getMonth() + 1 + '/' + date.value.getDate()
+        formatString += date.value.getMonth() + 1 + '/'
       }
+      if (date.value.getDate() < 10) {
+        formatString += '0' + date.value.getDate()
+      } else {
+        formatString += date.value.getDate()
+      }
+      console.log(formatString)
       return formatString
     })
 
