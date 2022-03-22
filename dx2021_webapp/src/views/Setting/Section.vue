@@ -1,9 +1,39 @@
 <template>
   <div>
     <h1>推論区画設定</h1>
+    <h3>[Camera 1]</h3>
     <div id="canvasWrap">
       <!-- 画像Canvas -->
       <canvas id="canvasImage" class="canvas"></canvas>
+    </div>
+    <div class="tb-wrap my-3">
+      <table>
+        <tr class="tb-title">
+          <th>区画名</th>
+          <th>開始位置 x</th>
+          <th>開始位置 y</th>
+          <th>横幅</th>
+          <th>縦幅</th>
+        </tr>
+        <tr class="tb-row" v-for="(config, index) in configJson" :key="index">
+          <td>
+            No.
+            {{ index }}
+          </td>
+          <td>
+            {{ config.x }}
+          </td>
+          <td>
+            {{ config.y }}
+          </td>
+          <td>
+            {{ config.w }}
+          </td>
+          <td>
+            {{ config.h }}
+          </td>
+        </tr>
+      </table>
     </div>
   </div>
 </template>
@@ -39,8 +69,10 @@ export default {
   name: 'SectionSetting',
   setup() {
     const list = ref([])
+    const configJson = ref([])
     return {
       list,
+      configJson,
     }
   },
   async mounted() {
@@ -74,7 +106,7 @@ export default {
 
     //区画情報(整形済)
     const spaceJson = dataShaping(object_list)
-
+    this.configJson = spaceJson
     //全体のブロックを取得
     const wrap = document.getElementById('canvasWrap')
 
@@ -146,3 +178,41 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+.tb-wrap {
+  width: 100%;
+}
+table {
+  border-bottom: solid 2px #2e58b8;
+  width: 100%;
+}
+@media screen and (max-width: 500px) {
+  table {
+    width: 450px;
+  }
+  .tb-wrap {
+    overflow-x: scroll;
+  }
+}
+
+tr {
+  height: 4em;
+  text-align: center;
+}
+td,
+th {
+  vertical-align: middle;
+}
+.tb-title {
+  background-color: #2e58b81a;
+  border-top: solid 2px #2e58b8;
+  border-bottom: solid 2px #2e58b8;
+}
+.tb-row {
+  display: table-row-group;
+}
+.tb-row:nth-child(odd) {
+  background-color: #e3e3e3;
+}
+</style>
