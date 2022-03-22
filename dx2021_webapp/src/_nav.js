@@ -10,6 +10,19 @@ export default [
     icon: 'cil-speedometer',
   },
   {
+    component: 'CNavGroup',
+    name: '在庫詳細情報',
+    icon: 'cil-speedometer',
+    items: [
+      {
+        component: 'CNavItem',
+        name: 'Camera 1',
+        to: '/inference/camera-1',
+        icon: 'cil-speedometer',
+      },
+    ],
+  },
+  {
     component: 'CNavItem',
     name: '不足在庫',
     to: '/404',

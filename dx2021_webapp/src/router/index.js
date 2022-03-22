@@ -32,6 +32,11 @@ const routes = [
         component: () => import('@/views/Dashboard.vue'),
       },
       {
+        path: '/Inference/:cameraName',
+        name: 'Inference',
+        component: () => import('@/views/infecenre/Inference.vue'),
+      },
+      {
         path: '/Image/now',
         name: 'ImageNow',
         component: () => import('@/views/Camera/Now.vue'),
