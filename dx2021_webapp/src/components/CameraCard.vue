@@ -1,6 +1,6 @@
 <template>
   <CCard>
-    <CCardHeader><CIcon icon="cil-drop" /> {{ cameraName }} </CCardHeader>
+    <CCardHeader><CIcon icon="cil-camera" /> {{ cameraName }} </CCardHeader>
     <CCardBody>
       <CRow>
         <CImage fluid :src="imageUrl" />
