@@ -10,7 +10,7 @@
                 <strong>{{ allSection }} 区画</strong>
                 <CProgress
                   class="my-2"
-                  color="success"
+                  color="primary"
                   thin
                   :precision="1"
                   :value="100"
@@ -21,7 +21,7 @@
                 <strong>{{ manySection }} 区画 ({{ manyPercent }}%)</strong>
                 <CProgress
                   class="my-2"
-                  color="primary"
+                  color="success"
                   thin
                   :precision="1"
                   :value="manyPercent"
