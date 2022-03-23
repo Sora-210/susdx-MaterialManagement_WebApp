@@ -9,21 +9,29 @@
       <CDropdownHeader component="h6" class="bg-light fw-semibold py-2">
         Account
       </CDropdownHeader>
-      <CDropdownItem>
+      <CDropdownItem class="pointer">
         <CIcon icon="cil-envelope-open" /> AccountName:
         {{ accountName }}
       </CDropdownItem>
-      <CDropdownItem>
+      <CDropdownItem class="pointer" @click="noFunc">
         <CIcon icon="cil-envelope-open" /> Messages
         <CBadge color="success" class="ms-auto">{{ itemsCount }}</CBadge>
       </CDropdownItem>
-      <CDropdownHeader component="h6" class="bg-light fw-semibold py-2">
+      <CDropdownHeader
+        @click="noFunc"
+        component="h6"
+        class="bg-light fw-semibold py-2 pointer"
+      >
         Settings
       </CDropdownHeader>
-      <CDropdownItem> <CIcon icon="cil-user" /> Profile </CDropdownItem>
-      <CDropdownItem> <CIcon icon="cil-settings" /> Settings </CDropdownItem>
+      <CDropdownItem class="pointer" @click="noFunc">
+        <CIcon icon="cil-user" /> Profile
+      </CDropdownItem>
+      <CDropdownItem class="pointer" @click="noFunc">
+        <CIcon icon="cil-settings" /> Settings
+      </CDropdownItem>
       <CDropdownDivider />
-      <CDropdownItem @click="logout">
+      <CDropdownItem class="pointer" @click="logout">
         <CIcon icon="cil-lock-locked" /> Logout
       </CDropdownItem>
     </CDropdownMenu>
@@ -49,6 +57,15 @@ export default {
       this.$store.commit('logout')
       this.$router.push('/login')
     },
+    noFunc: function () {
+      alert('この機能は未実装です')
+    },
   },
 }
 </script>
+
+<style scoped>
+.pointer {
+  cursor: pointer;
+}
+</style>
