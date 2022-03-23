@@ -1,7 +1,16 @@
 <template>
   <div>
-    <h1>推論区画設定</h1>
-    <h3>[Camera 1]</h3>
+    <CRow class="justify-content-between" :xs="{ cols: 1 }" :md="{ cols: 2 }">
+      <CCol>
+        <h1>推論区画設定</h1>
+        <h3>[Camera 1]</h3>
+      </CCol>
+      <CCol class="align-self-center" style="text-align: end">
+        <CButton color="success" variant="outline" @click="updateSpace">
+          区画追加
+        </CButton>
+      </CCol>
+    </CRow>
     <div id="canvasWrap">
       <!-- 画像Canvas -->
       <canvas id="canvasImage" class="canvas"></canvas>
@@ -12,8 +21,9 @@
           <th>区画名</th>
           <th>開始位置 x</th>
           <th>開始位置 y</th>
-          <th>横幅</th>
-          <th>縦幅</th>
+          <th>横幅 w</th>
+          <th>縦幅 h</th>
+          <th></th>
         </tr>
         <tr class="tb-row" v-for="(config, index) in configJson" :key="index">
           <td>
@@ -22,15 +32,24 @@
           </td>
           <td>
             {{ config.x }}
+            px
           </td>
           <td>
             {{ config.y }}
+            px
           </td>
           <td>
             {{ config.w }}
+            px
           </td>
           <td>
             {{ config.h }}
+            px
+          </td>
+          <td>
+            <CButton color="warning" variant="outline" @click="updateSpace">
+              修正
+            </CButton>
           </td>
         </tr>
       </table>
@@ -175,6 +194,11 @@ export default {
     window.onresize = resize
 
     base_image.onload = resize
+  },
+  methods: {
+    updateSpace: function () {
+      alert('この機能は未実装です')
+    },
   },
 }
 </script>
