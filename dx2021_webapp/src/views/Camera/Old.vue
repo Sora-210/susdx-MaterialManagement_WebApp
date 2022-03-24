@@ -58,7 +58,7 @@
 
 <script>
 import { ref, computed } from 'vue'
-import CameraCard from '@/components/CameraCard.vue'
+import CameraCard from '@/components/Camera/CameraCard.vue'
 
 import store from '@/store/index'
 

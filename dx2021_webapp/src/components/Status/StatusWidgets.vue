@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import StatusCard from '@/components/StatusCard.vue'
+import StatusCard from '@/components/Status/StatusCard.vue'
 
 export default {
   name: 'StatusWidgets',

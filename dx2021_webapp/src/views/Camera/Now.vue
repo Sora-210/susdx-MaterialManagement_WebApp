@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import CameraCard from '@/components/CameraCard.vue'
+import CameraCard from '@/components/Camera/CameraCard.vue'
 
 import store from '@/store/index'
 

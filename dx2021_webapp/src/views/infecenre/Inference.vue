@@ -35,7 +35,7 @@
 import { ref } from 'vue'
 import store from '@/store/index'
 import api from '@/api'
-import StatusWidgetsNoTitle from '@/components/StatusWidgetsNoTitle.vue'
+import StatusWidgetsNoTitle from '@/components/Status/StatusWidgetsNoTitle.vue'
 
 export default {
   name: 'Inference',

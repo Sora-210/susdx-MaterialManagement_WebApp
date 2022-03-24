@@ -13,8 +13,8 @@
 
 <script>
 import { ref } from 'vue'
-import StatusWidgets from '@/components/StatusWidgets.vue'
-import StatusBar from '@/components/StatusBar.vue'
+import StatusWidgets from '@/components/Status/StatusWidgets.vue'
+import StatusBar from '@/components/Status/StatusBar.vue'
 
 import store from '@/store/index'
 import api from '@/api'
