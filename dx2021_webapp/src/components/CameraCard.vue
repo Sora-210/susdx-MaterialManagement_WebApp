@@ -22,8 +22,5 @@ export default {
       default: 'https://api.sus-dx.sora210.net/cam1/example',
     },
   },
-  setup(props) {
-    console.log(props.imageUrl)
-  },
 }
 </script>

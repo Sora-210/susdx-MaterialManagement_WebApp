@@ -88,10 +88,8 @@ export default {
           .then((res) => {
             this.$store.commit('setJwt', res.data.token)
             if (this.$route.query.path) {
-              console.log('path ok')
               this.$router.push({ path: this.$route.query.path })
             } else {
-              console.log('path ng')
               this.$router.push({ path: '/' })
             }
           })

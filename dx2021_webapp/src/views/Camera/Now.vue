@@ -31,7 +31,6 @@ export default {
           store.getters.jwt,
       },
     ]
-
     return {
       metaDatas,
     }
