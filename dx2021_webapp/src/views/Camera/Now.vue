@@ -27,7 +27,7 @@ export default {
       {
         cameraName: 'Camera1',
         imageUrl:
-          'https://api.sus-dx.sora210.net/cam1?authorization=' +
+          'https://api.sus-dx.sora210.net/testProject/image/1/latest?authorization=' +
           store.getters.jwt,
       },
     ]

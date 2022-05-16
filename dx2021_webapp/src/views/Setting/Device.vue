@@ -66,10 +66,11 @@ export default {
         authorization: `Bearer ${store.getters.jwt}`,
       },
     }
-    api.get(`https://api.sus-dx.sora210.net/list/`, option).then((res) => {
-      console.log(res.data)
-      deviceList.value = res.data
-    })
+    api
+      .get(`https://api.sus-dx.sora210.net/testProject/list`, option)
+      .then((res) => {
+        deviceList.value = res.data
+      })
 
     return {
       deviceList,
