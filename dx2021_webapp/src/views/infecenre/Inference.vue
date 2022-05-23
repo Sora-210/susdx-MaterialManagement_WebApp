@@ -49,18 +49,18 @@ export default {
     }
   },
   async mounted() {
-    //区画情報を取得
+    //区画?��?報を取?��?
     const option = {
       headers: {
         authorization: `Bearer ${store.getters.jwt}`,
       },
     }
     const res = await api.get(
-      'https://api.sus-dx.sora210.net/cam1/config/inference',
+      'https://api.sus-dx.sora210.net/testProject/config/1/inference',
       option,
     )
     const resInference = await api.get(
-      'https://api.sus-dx.sora210.net/cam1/inference',
+      'https://api.sus-dx.sora210.net/testProject/inference/1/latest',
       option,
     )
     resInference.data.data.forEach((res) => {
@@ -94,43 +94,43 @@ export default {
       return shapedList
     }
 
-    //区画情報(整形済)
+    //区画?��?報(整形?��?)
     const spaceJson = dataShaping(object_list)
 
-    //全体のブロックを取得
+    //全体�??��ブロ?��?クを取?��?
     const wrap = document.getElementById('canvasWrap')
 
     //画像を準備(最新画像を使用)
     const base_image = new Image()
-    base_image.src = `https://api.sus-dx.sora210.net/cam1?authorization=${this.$store.getters.jwt}`
+    base_image.src = `https://api.sus-dx.sora210.net/testProject/image/1/latest?authorization=${this.$store.getters.jwt}`
     //画像描画canvasを準備
     const canvas_1 = document.getElementById('canvasImage')
     const canvas_1_ctx = canvas_1.getContext('2d')
 
     //区画描画用のcanvasを準備
     for (let i = 0; i < spaceJson.length; i++) {
-      //エレメント生成
+      //エレメント生?��?
       const canvas = document.createElement('canvas')
       const ctx = canvas.getContext('2d')
 
-      //id, class設定
+      //id, class設?��?
       canvas.id = `cnavasSpace-${i}`
       canvas.classList.add('canvas')
 
-      //wrapに追加
+      //wrapに追?��?
       wrap.append(canvas)
 
-      //jsonに追加
+      //jsonに追?��?
       spaceJson[i].canvas = canvas
       spaceJson[i].ctx = ctx
     }
     console.log(spaceJson)
 
     function resize() {
-      //基本サイズの取得
-      const width = wrap.clientWidth //wrapブロックの横幅取得
-      const scale = width / 1920 //FullHDとの比較倍率
-      const height = 1080 * scale //アスペクト比固定での高さ計算
+      //基本サイズの取�?
+      const width = wrap.clientWidth //wrapブロ?��?クの横?��?取�?
+      const scale = width / 1920 //FullHDとの比�?倍率
+      const height = 1080 * scale //アスペクト比固定での高さ計�?
       wrap.style.height = `${height}px`
 
       //canvasをリサイズ
@@ -141,20 +141,20 @@ export default {
         space.canvas.height = height
       })
 
-      //ベースとなる画像を描画
+      //ベ�??��スとなる画像を描画
       canvas_1_ctx.drawImage(base_image, 0, 0, 1920, 1080, 0, 0, width, height)
 
       spaceJson.forEach((space) => {
-        //図形の各種数値計算&変数準備
+        //図形の?��?種数値計�?&変数準備
         const x = space.x * scale
         const y = space.y * scale
         const w = space.w * scale
         const h = space.h * scale
         const color = space.color
 
-        //図形の設定
+        //図形の設?��?
         space.ctx.strokeStyle = color
-        space.ctx.lineWidth = 1
+        space.ctx.lineWidth = 4
 
         //図形を描画
         space.ctx.rect(x, y, w, h)

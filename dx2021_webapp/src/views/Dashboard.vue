@@ -49,7 +49,10 @@ export default {
       },
     }
     api
-      .get('https://api.sus-dx.sora210.net/cam1/inference', option)
+      .get(
+        'https://api.sus-dx.sora210.net/testProject/inference/1/latest',
+        option,
+      )
       .then((res) => {
         let statusJson = res.data.data
         statusJson.forEach((value) => {

@@ -73,13 +73,13 @@ export default {
     const cameraNumberSelectOption = [
       {
         label: 'Camera 1',
-        value: 'cam1',
+        value: '1',
       },
     ]
 
     const date = ref(new Date())
     const dateFormat = computed(() => {
-      let formatString = date.value.getFullYear() + '/'
+      let formatString = '1/' + date.value.getFullYear() + '/'
       if (date.value.getMonth() + 1 < 10) {
         formatString += '0' + (date.value.getMonth() + 1) + '/'
       } else {
@@ -104,7 +104,7 @@ export default {
       }
       api
         .get(
-          `https://api.sus-dx.sora210.net/cam1/list/${dateFormat.value}`,
+          `https://api.sus-dx.sora210.net/testProject/list/${dateFormat.value}`,
           option,
         )
         .then((res) => {
@@ -114,7 +114,7 @@ export default {
             imageList.value.push({
               name: fileName,
               url:
-                'https://api.sus-dx.sora210.net/cam1/' +
+                'https://api.sus-dx.sora210.net/testProject/image/1/' +
                 fileName.split('.')[0] +
                 '?authorization=' +
                 store.getters.jwt,
