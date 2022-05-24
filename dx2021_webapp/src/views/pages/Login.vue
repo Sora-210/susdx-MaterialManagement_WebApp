@@ -1,53 +1,33 @@
 <template>
   <div>
-    <div class="bg-light min-vh-100 d-flex flex-row align-items-center">
+    <div
+      id="back"
+      class="bg-light min-vh-100 d-flex flex-row align-items-center"
+    >
       <CContainer>
-        <CRow class="justify-content-center">
-          <CCol :md="8">
-            <h1>資材管理システム</h1>
-            <CCardGroup>
-              <CCard class="p-4 login-card">
-                <CCardBody>
-                  <h1>Login</h1>
-                  <p class="text-medium-emphasis">
-                    管理アカウントでログインしてください
+        <CRow id="login-container">
+          <CCol md="7" xl="6">
+            <div id="login-form">
+              <h1>資材管理システム</h1>
+              <div>
+                <div id="form-alert">
+                  <p>
+                    {{ login_alert }}
                   </p>
-                  <CInputGroup class="mb-3">
-                    <CInputGroupText>
-                      <CIcon icon="cil-user" />
-                    </CInputGroupText>
-                    <CFormInput
-                      placeholder="AccountID"
-                      autocomplete="username"
-                      v-model="accountId"
-                    />
-                  </CInputGroup>
-                  <CInputGroup class="mb-4">
-                    <CInputGroupText>
-                      <CIcon icon="cil-lock-locked" />
-                    </CInputGroupText>
-                    <CFormInput
-                      type="password"
-                      placeholder="Password"
-                      autocomplete="current-password"
-                      v-model="password"
-                    />
-                  </CInputGroup>
-                  <CRow>
-                    <CCol :xs="6">
-                      <CButton
-                        role="button"
-                        color="primary"
-                        class="px-4"
-                        @click="login"
-                      >
-                        Login
-                      </CButton>
-                    </CCol>
-                  </CRow>
-                </CCardBody>
-              </CCard>
-            </CCardGroup>
+                </div>
+                <div id="form-userId" class="form-input-box">
+                  <label>AccountId</label>
+                  <input type="text" v-model="accountId" />
+                </div>
+                <div id="form-password" class="form-input-box">
+                  <label>Password</label>
+                  <input type="password" v-model="password" />
+                </div>
+                <div id="login_btn" @click="login">
+                  <span>Login</span>
+                </div>
+              </div>
+            </div>
           </CCol>
         </CRow>
       </CContainer>
@@ -70,10 +50,12 @@ export default {
   setup() {
     const accountId = ref('')
     const password = ref('')
+    const login_alert = ref('管理アカウントでログインしてください')
 
     return {
       accountId,
       password,
+      login_alert,
     }
   },
   methods: {
@@ -94,10 +76,10 @@ export default {
             }
           })
           .catch(() => {
-            alert('AccountId, Passwordのいずれかが異なります')
+            this.login_alert = 'AccoundId又はPasswordが異なります'
           })
       } else {
-        alert('accountId, passwordを入力してください')
+        this.login_alert = 'AccoundId又はPasswordが異なります'
       }
     },
   },
@@ -105,7 +87,67 @@ export default {
 </script>
 
 <style scoped>
-.login-card {
-  border-left: solid 25px #321fdb;
+#login-container {
+  justify-content: center;
+}
+
+#login-form {
+  padding: 30px;
+  backdrop-filter: blur(5px);
+}
+
+.form-input-box {
+  margin: 20px 10px;
+}
+
+h1 {
+  color: #000;
+  text-align: center;
+  border-bottom: solid 1px #000;
+  margin-bottom: 40px;
+}
+
+label {
+  color: #000;
+}
+
+input {
+  border: solid 1px rgba(33, 22, 237, 0.5);
+  border-radius: 20px;
+  font-size: 20px;
+  color: #000;
+  padding: 5px 20px;
+  width: 100%;
+  transition: border ease 0.2s;
+}
+input:focus {
+  transition: border ease 0.2s;
+  border: solid 1px rgba(33, 22, 237, 1);
+  outline: none;
+}
+
+#login_btn {
+  color: #000;
+  font-size: 20px;
+  cursor: pointer;
+  text-align: center;
+  margin: 0 auto;
+  margin-top: 45px;
+  width: 80%;
+  padding: 10px 0;
+  border: solid 3px rgba(33, 22, 237, 0.3);
+  transition: color ease 0.2s;
+  transition: background-color ease 0.2s;
+}
+
+#login_btn:hover {
+  background-color: rgba(33, 22, 237, 0.3);
+  color: #fff;
+  transition: all ease 0.2s;
+}
+
+#form-alert {
+  text-align: center;
+  color: #000;
 }
 </style>
