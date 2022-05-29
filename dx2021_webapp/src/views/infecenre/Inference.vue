@@ -1,33 +1,74 @@
 <template>
   <div>
-    <h1>在庫状況詳細 [Camera 1]</h1>
+    <h1>在庫状況詳細</h1>
     <div id="canvasWrap">
+      <div class="loader-container">
+        <div class="loader"></div>
+      </div>
       <!-- 画像Canvas -->
       <canvas id="canvasImage" class="canvas"></canvas>
     </div>
-    <StatusWidgetsNoTitle :datas="list" />
+    <StatusWidgetsNewDesign projectId="testProject" cameraId="1" />
   </div>
 </template>
 
-<style>
+<style scope>
 #canvasWrap {
   width: 70%;
   height: 500px;
   position: relative;
   overflow: hidden;
+  box-shadow: 0 10px 25px 0 rgba(0, 0, 0, 0.3);
+  margin: 30px 0;
 }
 @media screen and (max-width: 500px) {
   #canvasWrap {
     width: 100%;
+    height: 250px;
   }
 }
 
+.loader-container {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  border-radius: 4px;
+}
+.loader {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: solid 4px;
+  border-color: #000000 #00000010;
+  position: relative;
+  animation-name: spin;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
 .canvas {
   top: 0px;
   right: 0;
   bottom: 0;
   left: 0;
   position: absolute;
+  animation: ease 1s fade-in;
 }
 </style>
 
@@ -35,12 +76,12 @@
 import { ref } from 'vue'
 import store from '@/store/index'
 import api from '@/api'
-import StatusWidgetsNoTitle from '@/components/Status/StatusWidgetsNoTitle.vue'
+import StatusWidgetsNewDesign from '@/components/Status/StatusWidgetsNewDesign.vue'
 
 export default {
   name: 'Inference',
   components: {
-    StatusWidgetsNoTitle,
+    StatusWidgetsNewDesign,
   },
   setup() {
     const list = ref([])
@@ -49,7 +90,7 @@ export default {
     }
   },
   async mounted() {
-    //区画?��?報を取?��?
+    //区画情報を取得
     const option = {
       headers: {
         authorization: `Bearer ${store.getters.jwt}`,
@@ -66,9 +107,6 @@ export default {
     resInference.data.data.forEach((res) => {
       this.list.push(res)
     })
-    console.log(this.list)
-    // this.list.value = resInference.data.data
-    // console.log(this.list.value)
 
     const color = {
       many: 'rgb(0, 255, 0)',
@@ -124,7 +162,6 @@ export default {
       spaceJson[i].canvas = canvas
       spaceJson[i].ctx = ctx
     }
-    console.log(spaceJson)
 
     function resize() {
       //基本サイズの取�?
