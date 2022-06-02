@@ -7,7 +7,15 @@
       :noneSection="noneSection"
       :coverSection="coverSection"
     />
-    <StatusCardB projectId="testProject" cameraName="Camera 1" cameraId="1" />
+    <CRow class="mb-5" :xs="{ cols: 1 }" :md="{ cols: 2 }" :xl="{ cols: 3 }">
+      <CCol>
+        <StatusCardB
+          projectId="testProject"
+          cameraName="Camera 1"
+          cameraId="1"
+        />
+      </CCol>
+    </CRow>
   </div>
 </template>
 
