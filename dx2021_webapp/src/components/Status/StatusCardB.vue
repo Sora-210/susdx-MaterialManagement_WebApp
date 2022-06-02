@@ -9,10 +9,10 @@
       </div>
       <div class="container" v-else key="main">
         <div id="camera_status_list">
-          <div class="color_many"></div>
-          <div class="color_few"></div>
-          <div class="color_none"></div>
-          <div class="color_cover"></div>
+          <div class="color_many" :style="'flex:' + manyPercent + '%'"></div>
+          <div class="color_few" :style="'flex:' + fewPercent + '%'"></div>
+          <div class="color_none" :style="'flex:' + nonePercent + '%'"></div>
+          <div class="color_cover" :style="'flex:' + coverPercent + '%'"></div>
         </div>
         <div id="camera_status">
           <div id="camera_status_title">
@@ -31,16 +31,16 @@
           </div>
           <div id="camera_status_detail">
             <div>
-              <span>3 区画</span>
+              <span>{{ manySection }} 区画</span>
             </div>
             <div>
-              <span>0 区画</span>
+              <span>{{ fewSection }} 区画</span>
             </div>
             <div>
-              <span>3 区画</span>
+              <span>{{ noneSection }} 区画</span>
             </div>
             <div>
-              <span>2 区画</span>
+              <span>{{ coverSection }} 区画</span>
             </div>
           </div>
         </div>
@@ -80,28 +80,25 @@
 #camera_status_list div {
   width: 100%;
   height: 7px;
-  transition: flex 1s ease;
+  transition: width 1s ease;
 }
 #camera_status_list .color_many {
   background-color: #2cb4ad;
-  flex: 37.5%;
 }
 #camera_status_list .color_few {
   background-color: #ffdc00;
-  flex: 0%;
 }
 #camera_status_list .color_none {
   background-color: #ef857d;
-  flex: 37.5%;
 }
 #camera_status_list .color_cover {
   background-color: #736d71;
-  flex: 25%;
 }
 
 #camera_status {
   display: flex;
   justify-content: space-evenly;
+  font-size: 1.2em;
 }
 #camera_status .color_many span {
   padding-left: 5px;
@@ -192,8 +189,18 @@ export default {
   },
   setup() {
     const flag = ref(true)
+    const allSection = ref(0)
+    const manySection = ref(0)
+    const fewSection = ref(0)
+    const noneSection = ref(0)
+    const coverSection = ref(0)
     return {
       flag,
+      allSection,
+      manySection,
+      fewSection,
+      noneSection,
+      coverSection,
     }
   },
   async mounted() {
@@ -207,13 +214,42 @@ export default {
         `https://api.sus-dx.sora210.net/${this.projectId}/inference/${this.cameraId}/latest`,
         option,
       )
-      .then(() => {
+      .then((res) => {
+        let statusJson = res.data.data
+        statusJson.forEach((value) => {
+          value[1].forEach((value2) => {
+            this.allSection++
+            if (value2.status === 'many') {
+              this.manySection++
+            } else if (value2.status === 'few') {
+              this.fewSection++
+            } else if (value2.status === 'none') {
+              this.noneSection++
+            } else if (value2.status === 'cover') {
+              this.coverSection++
+            }
+          })
+        })
         this.flag = false
       })
   },
   methods: {
     click: function () {
       this.$router.push(`/inference/${this.cameraId}`)
+    },
+  },
+  computed: {
+    manyPercent: function () {
+      return Math.floor((this.manySection / this.allSection) * 1000) / 10
+    },
+    fewPercent: function () {
+      return Math.floor((this.fewSection / this.allSection) * 1000) / 10
+    },
+    nonePercent: function () {
+      return Math.floor((this.noneSection / this.allSection) * 1000) / 10
+    },
+    coverPercent: function () {
+      return Math.floor((this.coverSection / this.allSection) * 1000) / 10
     },
   },
 }
