@@ -64,7 +64,7 @@ export default {
     const client = ref({})
 
     onMounted(() => {
-      client.value = mqtt.connect('ws://sus-dx.sora210.net:1884')
+      client.value = mqtt.connect('wss://sus-dx.sora210.net:8088')
       client.value.on('connect', () => {
         status.value = '接続中'
         getStatus.value = true
