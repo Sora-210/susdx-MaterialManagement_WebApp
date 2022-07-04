@@ -22,6 +22,9 @@ export default createStore({
     setJwt(state, jwt) {
       state.jwt = jwt
     },
+    setAccountName(state, name) {
+      state.accountName = name
+    },
     logout(state) {
       state.jwt = ''
     },

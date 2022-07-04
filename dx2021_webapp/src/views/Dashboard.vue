@@ -7,13 +7,21 @@
       :noneSection="noneSection"
       :coverSection="coverSection"
     />
-    <StatusWidgets :datas="list" />
+    <CRow class="mb-5" :xs="{ cols: 1 }" :md="{ cols: 2 }" :xl="{ cols: 3 }">
+      <CCol>
+        <StatusCardB
+          projectId="testProject"
+          cameraName="Camera 1"
+          cameraId="1"
+        />
+      </CCol>
+    </CRow>
   </div>
 </template>
 
 <script>
 import { ref } from 'vue'
-import StatusWidgets from '@/components/Status/StatusWidgets.vue'
+import StatusCardB from '@/components/Status/StatusCardB.vue'
 import StatusBar from '@/components/Status/StatusBar.vue'
 
 import store from '@/store/index'
@@ -22,8 +30,8 @@ import api from '@/api'
 export default {
   name: 'Dashboard',
   components: {
-    StatusWidgets,
     StatusBar,
+    StatusCardB,
   },
   setup() {
     const allSection = ref(0)
@@ -56,6 +64,7 @@ export default {
       .then((res) => {
         let statusJson = res.data.data
         statusJson.forEach((value) => {
+          console.log(value)
           this.list.push(value)
           value[1].forEach((value2) => {
             this.allSection++

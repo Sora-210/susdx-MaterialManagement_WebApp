@@ -11,9 +11,8 @@
               <h1>資材管理システム</h1>
               <div>
                 <div id="form-alert">
-                  <p>
-                    {{ login_alert }}
-                  </p>
+                  <p>管理アカウントでログインしてください</p>
+                  <p id="login-error">{{ login_alert }}</p>
                 </div>
                 <div id="form-userId" class="form-input-box">
                   <label>AccountId</label>
@@ -50,7 +49,7 @@ export default {
   setup() {
     const accountId = ref('')
     const password = ref('')
-    const login_alert = ref('管理アカウントでログインしてください')
+    const login_alert = ref('')
 
     return {
       accountId,
@@ -66,9 +65,10 @@ export default {
           password: this.password,
         }
         api
-          .post('https://api.sus-dx.sora210.net/login', body)
+          .post('https://auth.sus-dx.sora210.net/login', body)
           .then((res) => {
-            this.$store.commit('setJwt', res.data.token)
+            this.$store.commit('setJwt', res.data.data.token)
+            this.$store.commit('setAccountName', 'DemoUser')
             if (this.$route.query.path) {
               this.$router.push({ path: this.$route.query.path })
             } else {
@@ -79,7 +79,7 @@ export default {
             this.login_alert = 'AccoundId又はPasswordが異なります'
           })
       } else {
-        this.login_alert = 'AccoundId又はPasswordが異なります'
+        this.login_alert = 'AccoundId又はPasswordが入力されていません'
       }
     },
   },
@@ -92,8 +92,9 @@ export default {
 }
 
 #login-form {
-  padding: 30px;
+  padding: 40px;
   backdrop-filter: blur(5px);
+  box-shadow: 0 10px 25px 0 rgba(0, 0, 0, 0.1);
 }
 
 .form-input-box {
@@ -112,22 +113,23 @@ label {
 }
 
 input {
-  border: solid 1px rgba(33, 22, 237, 0.5);
+  border: solid 2px rgba(33, 22, 237, 0.5);
   border-radius: 20px;
   font-size: 20px;
   color: #000;
   padding: 5px 20px;
   width: 100%;
   transition: border ease 0.2s;
+  box-shadow: 0 10px 25px 0 rgba(0, 0, 0, 0.2);
 }
 input:focus {
   transition: border ease 0.2s;
-  border: solid 1px rgba(33, 22, 237, 1);
+  border: solid 2px rgba(33, 22, 237, 1);
   outline: none;
 }
 
 #login_btn {
-  color: #000;
+  color: #fff;
   font-size: 20px;
   cursor: pointer;
   text-align: center;
@@ -135,19 +137,34 @@ input:focus {
   margin-top: 45px;
   width: 80%;
   padding: 10px 0;
-  border: solid 3px rgba(33, 22, 237, 0.3);
+  background-color: rgba(33, 22, 237, 0.8);
   transition: color ease 0.2s;
   transition: background-color ease 0.2s;
+  box-shadow: 0 10px 25px 0 rgba(0, 0, 0, 0.3);
+}
+
+#login_btn:after {
+  content: '>';
+  margin-left: 20px;
+  transition: all ease 0.2s;
 }
 
 #login_btn:hover {
-  background-color: rgba(33, 22, 237, 0.3);
-  color: #fff;
+  background-color: rgba(33, 22, 237, 0.9);
+  transition: all ease 0.2s;
+}
+#login_btn:hover:after {
+  margin-left: 30px;
   transition: all ease 0.2s;
 }
 
 #form-alert {
   text-align: center;
   color: #000;
+}
+#login-error {
+  color: rgb(218, 0, 73);
+  font-weight: bold;
+  transition: all ease 0.2s;
 }
 </style>
