@@ -34,6 +34,12 @@ export default [
   },
   {
     component: 'CNavItem',
+    name: 'リアルタイム取得(Test)',
+    to: '/Image/Latest',
+    icon: 'cil-drop',
+  },
+  {
+    component: 'CNavItem',
     name: '現在画像一覧',
     to: '/Image/now',
     icon: 'cil-drop',

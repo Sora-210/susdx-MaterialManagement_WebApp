@@ -37,6 +37,11 @@ const routes = [
         component: () => import('@/views/infecenre/Inference.vue'),
       },
       {
+        path: '/Image/latest',
+        name: 'ImageLatest',
+        component: () => import('@/views/Camera/Latest.vue'),
+      },
+      {
         path: '/Image/now',
         name: 'ImageNow',
         component: () => import('@/views/Camera/Now.vue'),
